@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
   </head>
@@ -26,42 +25,31 @@
         </label>
       </div>
       <h1 id="logo" class="logo">[ TIC TAC TOE GAME ]</h1>
-      <div id="game" class="mt-10 flex flex-col gap-2 items-center">
+      <div id="game" class="mt-10 flex flex-col gap-4 items-center">
         <h2 class="text-2xl">Play with:</h2>
-        <button
-          id="friendMode"
-          class="button-primary text-blue-500 dark:text-blue-300"
-        >
-          Friend
-        </button>
-        <div class="group relative cursor-pointer py-2">
+        <button id="friendMode" class="button-primary">Friend</button>
+        <div class="group relative cursor-pointer">
           <div class="flex items-center mb-2">
-            <a class="button-primary text-red-500 dark:text-red-700"> AI </a>
+            <a class="button-primary"> AI </a>
           </div>
           <div
             class="invisible absolute z-50 flex translate-x-[-50%] left-[50%] justify-center gap-2 flex-row group-hover:visible w-fit"
           >
             <button
-              id="aiMode"
-              data-dropdown-toggle="aiModeHover"
-              data-dropdown-trigger="hover"
-              class="menu-hover button-primary text-red-500 dark:text-red-700"
+              id="aiMode-easy"
+              class="menu-hover button-primary text-green-500"
             >
               Easy
             </button>
             <button
-              id="aiMode"
-              data-dropdown-toggle="aiModeHover"
-              data-dropdown-trigger="hover"
-              class="menu-hover button-primary text-red-500 dark:text-red-700"
+              id="aiMode-medium"
+              class="menu-hover button-primary text-yellow-400"
             >
               Medium
             </button>
             <button
-              id="aiMode"
-              data-dropdown-toggle="aiModeHover"
-              data-dropdown-trigger="hover"
-              class="menu-hover button-primary text-red-500 dark:text-red-700"
+              id="aiMode-hard"
+              class="menu-hover button-primary text-red-500"
             >
               Hard
             </button>

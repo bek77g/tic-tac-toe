@@ -20,6 +20,7 @@ const winningCombinations: number[][] = [
 
 let currentPlayer: 'X' | 'O' = 'X';
 let gameMode: GameMode | null = null;
+let difficultyMode: Difficulty | null = null;
 let gameLocked: boolean = false;
 let cells: NodeListOf<Element> | null = null;
 
@@ -36,8 +37,9 @@ const createPlaceHoldersHTML = (): HTMLDivElement => {
   return board;
 };
 
-export const startGame = (mode: GameMode): void => {
+export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
   gameMode = mode;
+  difficultyMode = difficulty;
   logoH1.classList.add('logo-sm');
   gameDiv.innerHTML = '';
   gameDiv.appendChild(createPlaceHoldersHTML());
@@ -101,7 +103,7 @@ function resetBoard() {
 }
 
 function makeAIMove() {
-  const difficulty: Difficulty = Difficulty.Hard;
+  const difficulty: Difficulty = difficultyMode;
 
   const emptyCells = [...cells].filter((cell) => cell.textContent === '');
   let selectedCell: HTMLElement;
