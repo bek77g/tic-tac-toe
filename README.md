@@ -2,6 +2,10 @@
 
 This is a simple Tic-Tac-Toe game built using JavaScript and CSS. It allows players to play against each other or against an AI. The game offers different difficulty levels: Easy, Medium, and Hard.
 
+## Website
+
+The Tic Tac Toe Game website is hosted on GitHub Pages. You can access the game by visiting the following link: [Tic Tac Toe Game](https://bek77g.github.io/tic-tac-toe/)
+
 ## Getting Started 🚀
 
 To run the game locally, follow these steps:
