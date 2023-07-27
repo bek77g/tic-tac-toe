@@ -63,7 +63,7 @@ function handleCellClick(event: Event) {
 
   if (cell.textContent === '') {
     cell.textContent = currentPlayer;
-    cell.classList.add(currentPlayer.toLowerCase());
+    cell.classList.add(`cell-${currentPlayer.toLowerCase()}`);
 
     if (checkWin(currentPlayer)) {
       setTimeout(() => {
@@ -101,7 +101,7 @@ export function isBoardFull(): boolean {
 function resetBoard() {
   cells.forEach((cell) => {
     cell.textContent = '';
-    cell.classList.remove('o', 'x');
+    cell.classList.remove('cell-o', 'cell-x');
   });
   currentPlayer = 'X';
 }
