@@ -25,13 +25,19 @@ export let difficultyMode: Difficulty | null = null;
 let gameLocked: boolean = false;
 export let cells: NodeListOf<Element> | null = null;
 
+const renderCurrentPlayer = (player) => {
+  const displayPlayer: HTMLParagraphElement | null =
+    document.getElementById('display-player');
+  let currentPlayerClass: string = 'font-medium';
+  const currentPlayerColor: string =
+    player.toLowerCase() === 'x' ? 'text-blue-500' : 'text-red-500';
+  currentPlayerClass += ' ' + currentPlayerColor;
+  displayPlayer.innerHTML = `Current: <span class="${currentPlayerClass}">${player}</span>`;
+};
+
 export const setCurrentPlayer = (player) => {
-  const currentPlayerElement: HTMLSpanElement | null =
-    document.getElementById('current-player');
-  if (currentPlayerElement) {
-    currentPlayerElement.textContent = player;
-  }
   currentPlayer = player;
+  renderCurrentPlayer(player);
 };
 
 const createPlaceHoldersHTML = (): HTMLDivElement => {
@@ -52,7 +58,8 @@ export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
   difficultyMode = difficulty;
   logoH1.classList.add('logo-sm');
   gameDiv.innerHTML = '';
-  gameDiv.innerHTML += `<p class="mt-2 text-xl">Current: <span id="current-player" class="font-medium text-lime-500 ">${currentPlayer}</span></p>`;
+  gameDiv.innerHTML += `<p id="display-player" class="mt-2 text-xl"></p>`;
+  renderCurrentPlayer(currentPlayer);
   gameDiv.appendChild(createPlaceHoldersHTML());
   document.getElementById('quit')?.addEventListener('click', () => {
     const sure = confirm('Are you sure you want to quit and lose the game?');
