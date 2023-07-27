@@ -1,8 +1,9 @@
 import '../css/style.css';
 import { Difficulty, GameMode, darkModeHandler } from './utils';
-import { startGame } from './game';
+import { initGame, startGame } from './game';
 
 darkModeHandler();
+initGame();
 
 const friendModeButton: HTMLButtonElement = document.getElementById(
   'friendMode'
