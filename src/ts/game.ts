@@ -26,6 +26,11 @@ let gameLocked: boolean = false;
 export let cells: NodeListOf<Element> | null = null;
 
 export const setCurrentPlayer = (player) => {
+  const currentPlayerElement: HTMLSpanElement | null =
+    document.getElementById('current-player');
+  if (currentPlayerElement) {
+    currentPlayerElement.textContent = player;
+  }
   currentPlayer = player;
 };
 
@@ -47,6 +52,7 @@ export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
   difficultyMode = difficulty;
   logoH1.classList.add('logo-sm');
   gameDiv.innerHTML = '';
+  gameDiv.innerHTML += `<p class="mt-2 text-xl">Current: <span id="current-player" class="font-medium text-lime-500 ">${currentPlayer}</span></p>`;
   gameDiv.appendChild(createPlaceHoldersHTML());
   document.getElementById('quit')?.addEventListener('click', () => {
     const sure = confirm('Are you sure you want to quit and lose the game?');
@@ -76,7 +82,7 @@ function handleCellClick(event: Event) {
         resetBoard();
       }, 1000);
     } else {
-      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+      setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
       if (gameMode === GameMode.AI && currentPlayer === 'O') {
         gameLocked = true;
         setTimeout(() => {
@@ -103,7 +109,7 @@ function resetBoard() {
     cell.textContent = '';
     cell.classList.remove('cell-o', 'cell-x');
   });
-  currentPlayer = 'X';
+  setCurrentPlayer('X');
 }
 
 export function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
