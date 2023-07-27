@@ -42,39 +42,6 @@ const createPlaceHoldersHTML = (): HTMLDivElement => {
   return board;
 };
 
-export const initGame = () => {
-  gameDiv.innerHTML = `
-  <h2 class="text-2xl">Play with:</h2>
-        <button id="friendMode" class="button-primary">Friend</button>
-        <div class="group relative cursor-pointer">
-          <div class="flex items-center mb-2">
-            <a class="button-primary"> AI </a>
-          </div>
-          <div
-            class="invisible absolute z-50 flex translate-x-[-50%] left-[50%] justify-center gap-2 flex-row group-hover:visible w-fit"
-          >
-            <button
-              id="aiMode-easy"
-              class="menu-hover button-primary text-green-500"
-            >
-              Easy
-            </button>
-            <button
-              id="aiMode-medium"
-              class="menu-hover button-primary text-yellow-400"
-            >
-              Medium
-            </button>
-            <button
-              id="aiMode-hard"
-              class="menu-hover button-primary text-red-500"
-            >
-              Hard
-            </button>
-          </div>
-        </div>`;
-};
-
 export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
   gameMode = mode;
   difficultyMode = difficulty;
