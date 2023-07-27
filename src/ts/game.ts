@@ -1,10 +1,11 @@
+import { Difficulty, GameMode } from './main';
+
 const gameDiv: HTMLDivElement = document.getElementById(
   'game'
 ) as HTMLDivElement;
 const logoH1: HTMLHeadingElement = document.getElementById(
   'logo'
 ) as HTMLHeadingElement;
-let cells: NodeListOf<Element> | null = null;
 
 const winningCombinations: number[][] = [
   [0, 1, 2],
@@ -18,6 +19,9 @@ const winningCombinations: number[][] = [
 ];
 
 let currentPlayer: 'X' | 'O' = 'X';
+let gameMode: GameMode | null = null;
+let gameLocked: boolean = false;
+let cells: NodeListOf<Element> | null = null;
 
 const createPlaceHoldersHTML = (): HTMLDivElement => {
   const board: HTMLDivElement | null = document.createElement('div');
@@ -32,7 +36,8 @@ const createPlaceHoldersHTML = (): HTMLDivElement => {
   return board;
 };
 
-export const startGame = (): void => {
+export const startGame = (mode: GameMode): void => {
+  gameMode = mode;
   logoH1.classList.add('logo-sm');
   gameDiv.innerHTML = '';
   gameDiv.appendChild(createPlaceHoldersHTML());
@@ -45,26 +50,33 @@ export const startGame = (): void => {
 };
 
 function handleCellClick(event: Event) {
+  if (gameLocked) return; // Если игра заблокирована, не обрабатываем клик
+
   const cell = event.target as HTMLElement;
 
   if (cell.textContent === '') {
     cell.textContent = currentPlayer;
-    cell.classList.add(`cell-${currentPlayer.toLowerCase()}`);
+    cell.classList.add(currentPlayer.toLowerCase());
 
     if (checkWin(currentPlayer)) {
       setTimeout(() => {
         alert(currentPlayer + ' wins');
         resetBoard();
-      }, 100);
+      }, 1000);
     } else if (isBoardFull()) {
       setTimeout(() => {
         alert("It's a tie!");
         resetBoard();
-      }, 100);
+      }, 1000);
     } else {
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-      if (currentPlayer === 'O') {
-        makeAIMove();
+      if (gameMode === GameMode.AI && currentPlayer === 'O') {
+        // Пауза перед ходом компьютера
+        gameLocked = true;
+        setTimeout(() => {
+          makeAIMove();
+          gameLocked = false;
+        }, 500);
       }
     }
   }
@@ -89,25 +101,78 @@ function resetBoard() {
 }
 
 function makeAIMove() {
+  const difficulty: Difficulty = Difficulty.Hard;
+
   const emptyCells = [...cells].filter((cell) => cell.textContent === '');
-  const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  const cell = emptyCells[randomIndex] as HTMLElement;
+  let selectedCell: HTMLElement;
+
+  switch (difficulty) {
+    case Difficulty.Easy:
+      selectedCell = makeRandomMove(emptyCells);
+      break;
+    case Difficulty.Medium:
+      selectedCell = makeMediumMove(emptyCells);
+      break;
+    case Difficulty.Hard:
+      selectedCell = makeHardMove(emptyCells);
+      break;
+    default:
+      selectedCell = makeRandomMove(emptyCells);
+      break;
+  }
 
   setTimeout(() => {
-    cell.textContent = currentPlayer;
-    cell.classList.add(`cell-${currentPlayer.toLowerCase()}`);
+    selectedCell.textContent = currentPlayer;
+    selectedCell.classList.add(`cell-${currentPlayer.toLowerCase()}`);
     if (checkWin(currentPlayer)) {
       setTimeout(() => {
         alert(currentPlayer + ' wins!');
         resetBoard();
-      }, 100);
+      }, 1000);
     } else if (isBoardFull()) {
       setTimeout(() => {
         alert("It's a tie!");
         resetBoard();
-      }, 100);
+      }, 1000);
     } else {
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     }
-  }, 500);
+  }, 1000);
+}
+
+function makeRandomMove(emptyCells: HTMLElement[]): HTMLElement {
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  return emptyCells[randomIndex] as HTMLElement;
+}
+
+function makeMediumMove(emptyCells: HTMLElement[]): HTMLElement {
+  return makeRandomMove(emptyCells);
+}
+
+function makeHardMove(emptyCells: HTMLElement[]): HTMLElement {
+  for (const cell of emptyCells) {
+    const index = Array.from(cells).indexOf(cell);
+    if (checkMoveWin(index, currentPlayer)) {
+      return cell as HTMLElement;
+    }
+  }
+  for (const cell of emptyCells) {
+    const index = Array.from(cells).indexOf(cell);
+    if (checkMoveWin(index, getOpponentPlayer())) {
+      return cell as HTMLElement;
+    }
+  }
+  return makeRandomMove(emptyCells);
+}
+
+function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
+  const oldCellText = cells[moveIndex].textContent;
+  cells[moveIndex].textContent = player;
+  const moveWin = checkWin(player);
+  cells[moveIndex].textContent = oldCellText;
+  return moveWin;
+}
+
+function getOpponentPlayer(): 'X' | 'O' {
+  return currentPlayer === 'X' ? 'O' : 'X';
 }

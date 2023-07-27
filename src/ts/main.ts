@@ -4,7 +4,28 @@ import { startGame } from './game';
 
 darkModeHandler();
 
-const startGameButton: HTMLButtonElement = document.getElementById(
-  'startGame'
+export enum Difficulty {
+  Easy,
+  Medium,
+  Hard,
+}
+
+export enum GameMode {
+  Friend,
+  AI,
+}
+
+const friendModeButton: HTMLButtonElement | null = document.getElementById(
+  'friendMode'
 ) as HTMLButtonElement;
-startGameButton.addEventListener('click', startGame);
+const aiModeButton: HTMLButtonElement | null = document.getElementById(
+  'aiMode'
+) as HTMLButtonElement;
+
+friendModeButton.addEventListener('click', () => {
+  startGame(GameMode.Friend);
+});
+
+aiModeButton.addEventListener('click', () => {
+  startGame(GameMode.AI);
+});
