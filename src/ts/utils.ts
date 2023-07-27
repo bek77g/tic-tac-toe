@@ -13,8 +13,6 @@ export const darkModeHandler = (): void => {
 
   if (darkModeSwitcher) {
     darkModeSwitcher.addEventListener('input', () => {
-      console.log('Switching dark mode');
-
       htmlElement.classList.toggle('dark');
 
       if (htmlElement.classList.contains('dark')) {

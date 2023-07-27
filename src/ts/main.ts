@@ -2,6 +2,8 @@ import '../css/style.css';
 import { darkModeHandler } from './utils';
 import { startGame } from './game';
 
+darkModeHandler();
+
 export enum Difficulty {
   Easy,
   Medium,
@@ -13,19 +15,17 @@ export enum GameMode {
   AI,
 }
 
-darkModeHandler();
-
-const friendModeButton: HTMLButtonElement | null = document.getElementById(
+const friendModeButton: HTMLButtonElement = document.getElementById(
   'friendMode'
 ) as HTMLButtonElement;
 
-const aiModeButtonEasy: HTMLButtonElement | null = document.getElementById(
+const aiModeButtonEasy: HTMLButtonElement = document.getElementById(
   'aiMode-easy'
 ) as HTMLButtonElement;
-const aiModeButtonMedium: HTMLButtonElement | null = document.getElementById(
+const aiModeButtonMedium: HTMLButtonElement = document.getElementById(
   'aiMode-medium'
 ) as HTMLButtonElement;
-const aiModeButtonHard: HTMLButtonElement | null = document.getElementById(
+const aiModeButtonHard: HTMLButtonElement = document.getElementById(
   'aiMode-hard'
 ) as HTMLButtonElement;
 
