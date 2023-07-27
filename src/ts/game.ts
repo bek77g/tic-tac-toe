@@ -57,7 +57,7 @@ export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
 };
 
 function handleCellClick(event: Event) {
-  if (gameLocked) return; // Если игра заблокирована, не обрабатываем клик
+  if (gameLocked) return;
 
   const cell = event.target as HTMLElement;
 
