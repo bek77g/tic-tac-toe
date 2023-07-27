@@ -1,3 +1,4 @@
+import { makeAIMove } from './ai';
 import { Difficulty, GameMode } from './main';
 
 const gameDiv: HTMLDivElement = document.getElementById(
@@ -18,11 +19,15 @@ const winningCombinations: number[][] = [
   [2, 4, 6],
 ];
 
-let currentPlayer: 'X' | 'O' = 'X';
+export let currentPlayer: 'X' | 'O' = 'X';
 let gameMode: GameMode | null = null;
-let difficultyMode: Difficulty | null = null;
+export let difficultyMode: Difficulty | null = null;
 let gameLocked: boolean = false;
-let cells: NodeListOf<Element> | null = null;
+export let cells: NodeListOf<Element> | null = null;
+
+export const setCurrentPlayer = (player) => {
+  currentPlayer = player;
+};
 
 const createPlaceHoldersHTML = (): HTMLDivElement => {
   const board: HTMLDivElement | null = document.createElement('div');
@@ -73,7 +78,6 @@ function handleCellClick(event: Event) {
     } else {
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
       if (gameMode === GameMode.AI && currentPlayer === 'O') {
-        // Пауза перед ходом компьютера
         gameLocked = true;
         setTimeout(() => {
           makeAIMove();
@@ -84,13 +88,13 @@ function handleCellClick(event: Event) {
   }
 }
 
-function checkWin(player: 'X' | 'O'): boolean {
+export function checkWin(player: 'X' | 'O'): boolean {
   return winningCombinations.some((combination) => {
     return combination.every((index) => cells[index].textContent === player);
   });
 }
 
-function isBoardFull(): boolean {
+export function isBoardFull(): boolean {
   return [...cells].every((cell) => cell.textContent !== '');
 }
 
@@ -102,72 +106,7 @@ function resetBoard() {
   currentPlayer = 'X';
 }
 
-function makeAIMove() {
-  const difficulty: Difficulty = difficultyMode;
-
-  const emptyCells = [...cells].filter((cell) => cell.textContent === '');
-  let selectedCell: HTMLElement;
-
-  switch (difficulty) {
-    case Difficulty.Easy:
-      selectedCell = makeRandomMove(emptyCells);
-      break;
-    case Difficulty.Medium:
-      selectedCell = makeMediumMove(emptyCells);
-      break;
-    case Difficulty.Hard:
-      selectedCell = makeHardMove(emptyCells);
-      break;
-    default:
-      selectedCell = makeRandomMove(emptyCells);
-      break;
-  }
-
-  setTimeout(() => {
-    selectedCell.textContent = currentPlayer;
-    selectedCell.classList.add(`cell-${currentPlayer.toLowerCase()}`);
-    if (checkWin(currentPlayer)) {
-      setTimeout(() => {
-        alert(currentPlayer + ' wins!');
-        resetBoard();
-      }, 1000);
-    } else if (isBoardFull()) {
-      setTimeout(() => {
-        alert("It's a tie!");
-        resetBoard();
-      }, 1000);
-    } else {
-      currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    }
-  }, 1000);
-}
-
-function makeRandomMove(emptyCells: HTMLElement[]): HTMLElement {
-  const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  return emptyCells[randomIndex] as HTMLElement;
-}
-
-function makeMediumMove(emptyCells: HTMLElement[]): HTMLElement {
-  return makeRandomMove(emptyCells);
-}
-
-function makeHardMove(emptyCells: HTMLElement[]): HTMLElement {
-  for (const cell of emptyCells) {
-    const index = Array.from(cells).indexOf(cell);
-    if (checkMoveWin(index, currentPlayer)) {
-      return cell as HTMLElement;
-    }
-  }
-  for (const cell of emptyCells) {
-    const index = Array.from(cells).indexOf(cell);
-    if (checkMoveWin(index, getOpponentPlayer())) {
-      return cell as HTMLElement;
-    }
-  }
-  return makeRandomMove(emptyCells);
-}
-
-function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
+export function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
   const oldCellText = cells[moveIndex].textContent;
   cells[moveIndex].textContent = player;
   const moveWin = checkWin(player);
@@ -175,6 +114,6 @@ function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
   return moveWin;
 }
 
-function getOpponentPlayer(): 'X' | 'O' {
+export function getOpponentPlayer(): 'X' | 'O' {
   return currentPlayer === 'X' ? 'O' : 'X';
 }

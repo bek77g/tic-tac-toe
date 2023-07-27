@@ -1,14 +1,9 @@
 import '../css/style.css';
 import { darkModeHandler } from './utils';
 import { startGame } from './game';
+import { Difficulty } from './ai';
 
 darkModeHandler();
-
-export enum Difficulty {
-  Easy,
-  Medium,
-  Hard,
-}
 
 export enum GameMode {
   Friend,
