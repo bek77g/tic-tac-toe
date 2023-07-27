@@ -13,6 +13,8 @@ export enum GameMode {
   AI,
 }
 
+darkModeHandler();
+
 const friendModeButton: HTMLButtonElement | null = document.getElementById(
   'friendMode'
 ) as HTMLButtonElement;
@@ -40,5 +42,3 @@ aiModeButtonMedium.addEventListener('click', () => {
 aiModeButtonHard.addEventListener('click', () => {
   startGame(GameMode.AI, Difficulty.Hard);
 });
-
-darkModeHandler();
