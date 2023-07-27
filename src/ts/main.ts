@@ -1,18 +1,16 @@
 import '../css/style.css';
-import { darkModeHandler } from './utils';
+import { Difficulty, GameMode, darkModeHandler } from './utils';
 import { startGame } from './game';
-import { Difficulty } from './ai';
 
 darkModeHandler();
-
-export enum GameMode {
-  Friend,
-  AI,
-}
 
 const friendModeButton: HTMLButtonElement = document.getElementById(
   'friendMode'
 ) as HTMLButtonElement;
+
+friendModeButton.addEventListener('click', () => {
+  startGame(GameMode.Friend);
+});
 
 const aiModeButtonEasy: HTMLButtonElement = document.getElementById(
   'aiMode-easy'
@@ -23,10 +21,6 @@ const aiModeButtonMedium: HTMLButtonElement = document.getElementById(
 const aiModeButtonHard: HTMLButtonElement = document.getElementById(
   'aiMode-hard'
 ) as HTMLButtonElement;
-
-friendModeButton.addEventListener('click', () => {
-  startGame(GameMode.Friend);
-});
 
 aiModeButtonEasy.addEventListener('click', () => {
   startGame(GameMode.AI, Difficulty.Easy);

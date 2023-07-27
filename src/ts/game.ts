@@ -1,5 +1,5 @@
 import { makeAIMove } from './ai';
-import { Difficulty, GameMode } from './main';
+import { Difficulty, GameMode } from './utils';
 
 const gameDiv: HTMLDivElement = document.getElementById(
   'game'
