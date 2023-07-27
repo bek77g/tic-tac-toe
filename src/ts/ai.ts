@@ -16,7 +16,7 @@ export enum Difficulty {
 }
 
 export function makeAIMove() {
-  const difficulty: Difficulty = difficultyMode;
+  const difficulty: Difficulty = difficultyMode ?? Difficulty.Easy;
 
   const emptyCells = [...cells].filter((cell) => cell.textContent === '');
   let selectedCell: HTMLElement;
