@@ -6,6 +6,7 @@ import {
   difficultyMode,
   getOpponentPlayer,
   isBoardFull,
+  resetBoard,
   setCurrentPlayer,
 } from './game';
 
@@ -16,9 +17,12 @@ export enum Difficulty {
 }
 
 export function makeAIMove() {
-  const difficulty: Difficulty = difficultyMode ?? Difficulty.Easy;
+  const difficulty: Difficulty =
+    difficultyMode !== null ? difficultyMode : Difficulty.Easy;
 
   const emptyCells = [...cells].filter((cell) => cell.textContent === '');
+  if (emptyCells.length === 0) return;
+
   let selectedCell: HTMLElement;
 
   switch (difficulty) {

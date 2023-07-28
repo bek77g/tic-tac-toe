@@ -1,14 +1,3 @@
-export enum Difficulty {
-  Easy,
-  Medium,
-  Hard,
-}
-
-export enum GameMode {
-  Friend,
-  AI,
-}
-
 export const darkModeHandler = (): void => {
   console.log('used');
 

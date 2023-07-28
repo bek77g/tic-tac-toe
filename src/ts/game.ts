@@ -111,7 +111,7 @@ export function isBoardFull(): boolean {
   return [...cells].every((cell) => cell.textContent !== '');
 }
 
-function resetBoard() {
+export function resetBoard() {
   cells.forEach((cell) => {
     cell.textContent = '';
     cell.classList.remove('cell-o', 'cell-x');
@@ -120,10 +120,10 @@ function resetBoard() {
 }
 
 export function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
-  const oldCellText = cells[moveIndex].textContent;
-  cells[moveIndex].textContent = player;
+  const oldCellText = cells[moveIndex].innerText;
+  cells[moveIndex].innerText = player;
   const moveWin = checkWin(player);
-  cells[moveIndex].textContent = oldCellText;
+  cells[moveIndex].innerText = oldCellText;
   return moveWin;
 }
 
