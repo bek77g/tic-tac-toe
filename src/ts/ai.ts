@@ -57,9 +57,9 @@ export function makeAIMove() {
   }
 }
 
-export function makeRandomMove(emptyCells: HTMLElement[]): HTMLElement {
+export function makeRandomMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
   const randomIndex = Math.floor(Math.random() * emptyCells.length);
-  return emptyCells[randomIndex] as HTMLElement;
+  return emptyCells[randomIndex];
 }
 
 export function makeMediumMove(emptyCells: HTMLElement[]): HTMLElement {

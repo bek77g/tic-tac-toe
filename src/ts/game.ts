@@ -36,7 +36,7 @@ const renderCurrentPlayer = (player: 'X' | 'O') => {
   }
 };
 
-export const setCurrentPlayer = (player) => {
+export const setCurrentPlayer = (player: 'X' | 'O') => {
   currentPlayer = player;
   renderCurrentPlayer(player);
 };
