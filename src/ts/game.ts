@@ -23,16 +23,17 @@ export let currentPlayer: 'X' | 'O' = 'X';
 let gameMode: GameMode | null = null;
 export let difficultyMode: Difficulty | null = null;
 let gameLocked: boolean = false;
-export let cells: NodeListOf<Element> | null = null;
+export let cells: NodeListOf<HTMLDivElement> | null = null;
+let displayPlayer: HTMLParagraphElement | null = null;
 
-const renderCurrentPlayer = (player) => {
-  const displayPlayer: HTMLParagraphElement | null =
-    document.getElementById('display-player');
-  let currentPlayerClass: string = 'font-medium';
-  const currentPlayerColor: string =
-    player.toLowerCase() === 'x' ? 'text-blue-500' : 'text-red-500';
-  currentPlayerClass += ' ' + currentPlayerColor;
-  displayPlayer.innerHTML = `Current: <span class="${currentPlayerClass}">${player}</span>`;
+const renderCurrentPlayer = (player: 'X' | 'O') => {
+  if (displayPlayer) {
+    let currentPlayerClass: string = 'font-medium';
+    const currentPlayerColor: string =
+      player.toLowerCase() === 'x' ? 'text-blue-500' : 'text-red-500';
+    currentPlayerClass += ' ' + currentPlayerColor;
+    displayPlayer.innerHTML = `Current: <span class="${currentPlayerClass}">${player}</span>`;
+  }
 };
 
 export const setCurrentPlayer = (player) => {
@@ -70,9 +71,9 @@ export const startGame = (mode: GameMode, difficulty: Difficulty): void => {
 };
 
 function handleCellClick(event: Event) {
-  if (gameLocked) return;
+  if (gameLocked || cells === null) return;
 
-  const cell = event.target as HTMLElement;
+  const cell = event.target as HTMLDivElement;
 
   if (cell.textContent === '') {
     cell.textContent = currentPlayer;
