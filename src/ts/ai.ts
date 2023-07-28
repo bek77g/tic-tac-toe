@@ -20,7 +20,9 @@ export function makeAIMove() {
   const difficulty: Difficulty =
     difficultyMode !== null ? difficultyMode : Difficulty.Easy;
 
-  const emptyCells = [...cells].filter((cell) => cell.textContent === '');
+  const emptyCells = [...cells].filter(
+    (cell) => cell.textContent === ''
+  ) as HTMLDivElement[];
   if (emptyCells.length === 0) return;
 
   let selectedCell: HTMLElement;

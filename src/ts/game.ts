@@ -121,6 +121,8 @@ export function resetBoard() {
 }
 
 export function checkMoveWin(moveIndex: number, player: 'X' | 'O'): boolean {
+  if (cells === null) return false;
+
   const oldCellText = cells[moveIndex].innerText;
   cells[moveIndex].innerText = player;
   const moveWin = checkWin(player);
