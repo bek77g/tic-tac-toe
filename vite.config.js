@@ -1,3 +1,3 @@
 export default {
-  base: '/tictactoe-game/',
+  base: '/tic-tac-toe/',
 };
