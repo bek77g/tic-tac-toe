@@ -104,15 +104,19 @@ function handleCellClick(event: Event) {
 
 export function checkWin(player: 'X' | 'O'): boolean {
   return winningCombinations.some((combination) => {
-    return combination.every((index) => cells[index].textContent === player);
+    if (cells) {
+      return combination.every((index) => cells[index].textContent === player);
+    }
   });
 }
 
 export function isBoardFull(): boolean {
+  if (!cells) return false;
   return [...cells].every((cell) => cell.textContent !== '');
 }
 
 export function resetBoard() {
+  if (!cells) return null;
   cells.forEach((cell) => {
     cell.textContent = '';
     cell.classList.remove('cell-o', 'cell-x');
