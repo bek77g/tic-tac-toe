@@ -72,13 +72,13 @@ export function makeMediumMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
 export function makeHardMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
   for (const cell of emptyCells) {
     const index = Array.from(cells).indexOf(cell);
-    if (checkMoveWin(index, currentPlayer)) {
+    if (checkMoveWin(index, currentPlayer as 'X' | 'O')) {
       return cell as HTMLDivElement;
     }
   }
   for (const cell of emptyCells) {
     const index = Array.from(cells).indexOf(cell);
-    if (checkMoveWin(index, getOpponentPlayer())) {
+    if (checkMoveWin(index, getOpponentPlayer() as 'X' | 'O')) {
       return cell as HTMLDivElement;
     }
   }
