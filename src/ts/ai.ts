@@ -25,7 +25,7 @@ export function makeAIMove() {
   ) as HTMLDivElement[];
   if (emptyCells.length === 0) return;
 
-  let selectedCell: HTMLElement;
+  let selectedCell: HTMLDivElement;
 
   switch (difficulty) {
     case Difficulty.Easy:
@@ -64,21 +64,21 @@ export function makeRandomMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
   return emptyCells[randomIndex];
 }
 
-export function makeMediumMove(emptyCells: HTMLElement[]): HTMLElement {
+export function makeMediumMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
   return makeRandomMove(emptyCells);
 }
 
-export function makeHardMove(emptyCells: HTMLElement[]): HTMLElement {
+export function makeHardMove(emptyCells: HTMLDivElement[]): HTMLDivElement {
   for (const cell of emptyCells) {
     const index = Array.from(cells).indexOf(cell);
     if (checkMoveWin(index, currentPlayer)) {
-      return cell as HTMLElement;
+      return cell as HTMLDivElement;
     }
   }
   for (const cell of emptyCells) {
     const index = Array.from(cells).indexOf(cell);
     if (checkMoveWin(index, getOpponentPlayer())) {
-      return cell as HTMLElement;
+      return cell as HTMLDivElement;
     }
   }
   return makeRandomMove(emptyCells);
