@@ -9,7 +9,7 @@ const friendModeButton: HTMLButtonElement = document.getElementById(
 ) as HTMLButtonElement;
 
 friendModeButton.addEventListener('click', () => {
-  startGame(GameMode.Friend);
+  startGame(GameMode.Friend, Difficulty.Easy);
 });
 
 const aiModeButtonEasy: HTMLButtonElement = document.getElementById(
