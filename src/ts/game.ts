@@ -104,9 +104,8 @@ function handleCellClick(event: Event) {
 
 export function checkWin(player: 'X' | 'O'): boolean {
   return winningCombinations.some((combination) => {
-    if (cells) {
-      return combination.every((index) => cells[index].textContent === player);
-    }
+    if (!cells) return;
+    return combination.every((index) => cells[index].textContent === player);
   });
 }
 
